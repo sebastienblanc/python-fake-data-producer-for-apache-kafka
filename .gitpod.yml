@@ -10,5 +10,5 @@ tasks:
   - name: Install avn CLI
     init: pip install aiven-client
   - name: Open Readme
-    command: gp open https://aiven.io/developer/create-your-own-data-stream-for-kafka-with-python-and-faker
+    command: gp preview --external https://aiven.io/developer/create-your-own-data-stream-for-kafka-with-python-and-faker
 
