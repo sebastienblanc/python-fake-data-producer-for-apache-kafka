@@ -1,5 +1,21 @@
 # Python Fake Data Producer for Apache Kafka®
 
+`avn user login --token`
+
+`export token=<your token>`
+
+If you haven't yet create a kafka service : 
+
+```
+avn service create demo-kafka               \
+    -t kafka                                \
+    --cloud google-europe-west1             \
+    -p startup-2                            \
+    -c kafka.auto_create_topics_enable=true \
+    -c kafka_rest=true                    
+
+```
+
 ## Description
 
 **Python Fake Data Producer for Apache Kafka®** is a complete demo app allowing you to quickly produce a Python fake Pizza-based streaming dataset and push it to an Apache Kafka® topic. It gives an example on how easy is to create great fake streaming data to feed Apache Kafka.
