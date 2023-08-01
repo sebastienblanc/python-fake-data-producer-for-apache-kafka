@@ -1,3 +1,7 @@
 **/certs
+
 *.pyc
 venv
+kafkaCerts/ca.pem
+kafkaCerts/service.cert
+kafkaCerts/service.key

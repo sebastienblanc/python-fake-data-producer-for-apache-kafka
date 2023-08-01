@@ -1,31 +1,84 @@
 # Python Fake Data Producer for Apache Kafka®
 
-## Gitpod 
+## Quickstart with Gitpod
 
-`avn user login --token`
+This workspace comes with some pre-installed stuff for you : 
 
-`export token=<your token>`
+* Python requirements have already been installed
+* avn CLI has already been installed
 
-If you haven't yet create a kafka service : 
+First make sure to have an Aiven account, otherwise you are just a few clicks away of creating one [here](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post)
+
+Then make sure to get an personnal access token TODO: link to doc or short video to get a token
+
+Now you can login : 
+
+```bash
+avn user login --token
 
 ```
-avn service create demo-kafka               \
+
+Set your variables :
+```bash
+KAFKA_INSTANCE_NAME=my-kafka-demo
+CLOUD_REGION=aws-eu-south-1
+AIVEN_PLAN_NAME=startup-2
+DESTINATION_FOLDER_NAME=kafkaCerts
+```
+
+If you haven't yet, create a kafka service : 
+
+```bash
+avn service create $KAFKA_INSTANCE_NAME     \
     -t kafka                                \
-    --cloud google-europe-west1             \
-    -p startup-2                            \
+    --cloud $CLOUD_REGION                   \
+    -p $AIVEN_PLAN_NAME                     \
     -c kafka.auto_create_topics_enable=true \
     -c kafka_rest=true                    
 
 ```
 
-## Description
+Retrieve your host and port from the console and set them : 
+And retrieve the Apache Kafka Service URI with
 
-**Python Fake Data Producer for Apache Kafka®** is a complete demo app allowing you to quickly produce a Python fake Pizza-based streaming dataset and push it to an Apache Kafka® topic. It gives an example on how easy is to create great fake streaming data to feed Apache Kafka.
+```bash
+avn service get $KAFKA_INSTANCE_NAME --format '{service_uri}'
+```
 
-* **Apache Kafka**: a [distributed streaming platform](https://kafka.apache.org/)
-* **Topic**: all Apache Kafka records are organised into topics, you can think of a topic like an event log or a table if you're familiar with databases.
-* **Apache Kafka Producer**: an entity/application that publishes data to Apache Kafka
+The Apache Kafka Service URI is in the form `hostname:port` and provides the `hostname` and `port`, extract them as variables : 
 
-An Apache Apache Kafka cluster can be created in minutes in any cloud of your choice using [Aiven.io console](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post).
+```bash
+KAFKA_HOST=hostname
+KAFKA_PORT=port
+```
 
-For more informations about the code building blogs check the [blog post](https://aiven.io/blog/create-your-own-data-stream-for-kafka-with-python-and-faker?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post)
+You can wait for the newly created Apache Kafka instance to be ready with : 
+
+```bash
+avn service wait $KAFKA_INSTANCE_NAME
+```
+
+Now get your certificates : 
+
+```bash
+avn service user-creds-download $KAFKA_INSTANCE_NAME \
+  -d $DESTINATION_FOLDER_NAME \
+  --username avnadmin
+```
+
+And finally run the demo : 
+
+```bash
+
+python main.py \
+  --security-protocol ssl \
+  --cert-folder $DESTINATION_FOLDER_NAME\
+  --host $KAFKA_HOST \
+  --port $KAFKA_PORT \
+  --topic-name pizza-orders \
+  --nr-messages 0 \
+  --max-waiting-time 2 \
+  --subject pizza
+
+```
+

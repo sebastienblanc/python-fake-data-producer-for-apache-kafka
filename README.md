@@ -1,20 +1,6 @@
 # Python Fake Data Producer for Apache Kafka®
 
-`avn user login --token`
-
-`export token=<your token>`
-
-If you haven't yet create a kafka service : 
-
-```
-avn service create demo-kafka               \
-    -t kafka                                \
-    --cloud google-europe-west1             \
-    -p startup-2                            \
-    -c kafka.auto_create_topics_enable=true \
-    -c kafka_rest=true                    
-
-```
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/sebastienblanc/python-fake-data-producer-for-apache-kafka)
 
 ## Description
 
