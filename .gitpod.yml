@@ -10,5 +10,5 @@ tasks:
   - name: Install avn CLI
     init: pip install aiven-client
   - name: Open Readme
-    command: gp preview README-gitpod.md
+    command: gp open README-gitpod.md
 
